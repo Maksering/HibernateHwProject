@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.dao.UserDAO;
+
 import java.util.List;
 
 public class UserService {
@@ -16,7 +18,7 @@ public class UserService {
         if(user==null){
             System.out.println("User not found");
         } else {
-            System.out.println("Founded user: " + user);;
+            System.out.println("Founded user: " + user);
         }
     }
 
