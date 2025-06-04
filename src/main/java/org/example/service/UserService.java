@@ -1,6 +1,7 @@
-package org.example;
+package org.example.service;
 
 import org.example.dao.UserDAO;
+import org.example.user.User;
 
 import java.util.List;
 

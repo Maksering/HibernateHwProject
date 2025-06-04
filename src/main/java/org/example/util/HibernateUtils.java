@@ -1,5 +1,6 @@
-package org.example;
+package org.example.util;
 
+import org.example.user.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

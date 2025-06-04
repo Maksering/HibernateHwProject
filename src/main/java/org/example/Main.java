@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.service.UserService;
+import org.example.util.HibernateUtils;
+
 import java.util.Scanner;
 
 public class Main {

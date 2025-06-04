@@ -1,4 +1,4 @@
-package org.example;
+package org.example.user;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

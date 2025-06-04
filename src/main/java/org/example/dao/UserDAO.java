@@ -1,8 +1,8 @@
 package org.example.dao;
 
-import org.example.HibernateUtils;
+import org.example.util.HibernateUtils;
 import org.example.Main;
-import org.example.User;
+import org.example.user.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
