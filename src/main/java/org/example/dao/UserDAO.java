@@ -58,7 +58,6 @@ public class UserDAO {
             tr = session.beginTransaction();
             session.save(user);
             tr.commit();
-
             logger.log(Level.INFO, "User was created: " + user);
         } catch (Exception e){
             if(tr != null) {

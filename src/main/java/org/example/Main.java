@@ -4,8 +4,8 @@ import org.example.service.UserService;
 import org.example.util.HibernateUtils;
 
 import java.util.Scanner;
-
 public class Main {
+
     private static UserService userService = new UserService();
     private static Scanner scanner = new Scanner(System.in);
 
@@ -32,6 +32,7 @@ public class Main {
             scanner.close();
         }
     }
+
     private static void showMenu(){
         System.out.println("Hibernate project");
         System.out.println("1. Create User");
@@ -93,6 +94,4 @@ public class Main {
 
         userService.deleteUser(id);
     }
-
-
 }
