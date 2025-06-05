@@ -41,7 +41,7 @@ public class IntegrationUserDAOTest {
         userDAO.create(testUser);
     }
 
-    @Test
+   @Test
     void testCreateAndGetById(){
 
         User found = userDAO.findById(1);
@@ -108,5 +108,4 @@ public class IntegrationUserDAOTest {
             transaction.commit();
         }
     }
-
 }

@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.dao.UserDAO;
 import org.example.service.UserService;
 import org.example.util.HibernateUtils;
 

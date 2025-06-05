@@ -12,14 +12,18 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-public class UserDAO {
-    static Logger logger = Logger.getLogger(UserDAO.class.getName());
-    static {
-        try{
-            InputStream config = Main.class.getResourceAsStream("/logging.properties");
-            LogManager.getLogManager().readConfiguration(config);
-        } catch (Exception e){
-            e.printStackTrace();
+public class UserDAO{
+
+    private static final Logger logger = Logger.getLogger(UserDAO.class.getName());
+
+    static{
+        try {
+            InputStream config = UserDAO.class.getResourceAsStream("/logging.properties");
+            if (config != null) {
+                LogManager.getLogManager().readConfiguration(config);
+            }
+        } catch (Exception e) {
+            logger.severe("Failed to initialize logger: " + e.getMessage());
         }
     }
 
@@ -104,5 +108,4 @@ public class UserDAO {
             throw e;
         }
     }
-
 }

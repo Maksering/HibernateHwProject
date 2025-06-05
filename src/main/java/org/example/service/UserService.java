@@ -7,7 +7,6 @@ import java.util.List;
 
 public class UserService {
     private UserDAO userDAO = new UserDAO();
-
     public void createUser(String name, String email, int age) {
         User user = new User(name, email, age);
         userDAO.create(user);
