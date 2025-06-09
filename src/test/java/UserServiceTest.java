@@ -82,7 +82,7 @@ class UserServiceTest {
         when(userDAO.findById(1)).thenReturn(testUser);
         doNothing().when(userDAO).update(any(User.class));
 
-        userService.updateUser(1, "UpdateNameName", "UpdateName@test.com", "21");
+        userService.updateUser(1, "UpdateName", "UpdateName@test.com", "21");
         verify(userDAO).update(testUser);
     }
 
