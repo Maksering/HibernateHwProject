@@ -25,6 +25,23 @@ public class HibernateUtils {
         return sessionFactory;
     }
 
+    public static void buildSessionFactoryForTest() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            sessionFactory.close();
+        }
+
+        Configuration configuration = new Configuration()
+                .setProperty("hibernate.connection.driver_class", "org.postgresql.Driver")
+                .setProperty("hibernate.connection.url", System.getProperty("hibernate.connection.url"))
+                .setProperty("hibernate.connection.username", System.getProperty("hibernate.connection.username"))
+                .setProperty("hibernate.connection.password", System.getProperty("hibernate.connection.password"))
+                .setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect")
+                .setProperty("hibernate.hbm2ddl.auto", "create-drop");
+
+        configuration.addAnnotatedClass(User.class);
+        sessionFactory = configuration.buildSessionFactory();
+    }
+
     public static void shutdown(){
         getSessionFactory().close();
     }

@@ -27,10 +27,14 @@ public class IntegrationUserDAOTest {
 
     @BeforeAll
     static void beforeAll(){
+        postgres.start();
+
+        System.out.println("DB_URL: " + postgres.getJdbcUrl());
         System.setProperty("hibernate.connection.url", postgres.getJdbcUrl());
         System.setProperty("hibernate.connection.username", postgres.getUsername());
         System.setProperty("hibernate.connection.password", postgres.getPassword());
 
+        HibernateUtils.buildSessionFactoryForTest();
         userDAO = new UserDAO();
     }
 
