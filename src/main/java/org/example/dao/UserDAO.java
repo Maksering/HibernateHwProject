@@ -14,9 +14,14 @@ import java.util.logging.Logger;
 
 public class UserDAO{
 
-    private static final Logger logger = Logger.getLogger(UserDAO.class.getName());
+    private static Logger logger = initLogger();
 
-    static{
+    protected Logger getLogger() {
+        return logger;
+    }
+
+    public static Logger initLogger(){
+        Logger logger = Logger.getLogger(UserDAO.class.getName());
         try {
             InputStream config = UserDAO.class.getResourceAsStream("/logging.properties");
             if (config != null) {
@@ -25,86 +30,87 @@ public class UserDAO{
         } catch (Exception e) {
             logger.severe("Failed to initialize logger: " + e.getMessage());
         }
+        return logger;
     }
 
     public User findById(int id) {
         try(Session session = HibernateUtils.getSessionFactory().openSession()){
-            logger.log(Level.INFO, "Looking for user by id: " + id);
+            getLogger().log(Level.INFO, "Looking for user by id: " + id);
             User user = session.get(User.class, id);
             if(user!=null){
-                logger.log(Level.INFO,"User was found: " + user);
+                getLogger().log(Level.INFO,"User was found: " + user);
             }
             else {
-                logger.log(Level.INFO,"User not found");
+                getLogger().log(Level.INFO,"User not found");
             }
             return user;
         } catch (Exception e){
-            logger.log(Level.SEVERE,"Error on looking for user by id: " + id + " Error: " + e);
+            getLogger().log(Level.SEVERE,"Error on looking for user by id: " + id + " Error: " + e);
             throw e;
         }
     }
 
     public List<User> findAll(){
         try(Session session = HibernateUtils.getSessionFactory().openSession()) {
-            logger.log(Level.INFO, "Making list of all users");
+            getLogger().log(Level.INFO, "Making list of all users");
             List<User> users = session.createQuery("FROM User", User.class).list();
             return users;
         } catch (Exception e){
-            logger.log(Level.SEVERE,"Error on making list of all users. Error: " + e);
+            getLogger().log(Level.SEVERE,"Error on making list of all users. Error: " + e);
             throw e;
         }
     }
 
     public void create(User user){
-        logger.log(Level.INFO, "Create user: " + user);
+        getLogger().log(Level.INFO, "Create user: " + user);
         Transaction tr = null;
         try(Session session = HibernateUtils.getSessionFactory().openSession()){
             tr = session.beginTransaction();
             session.save(user);
             tr.commit();
-            logger.log(Level.INFO, "User was created: " + user);
+            getLogger().log(Level.INFO, "User was created: " + user);
         } catch (Exception e){
             if(tr != null) {
-                logger.log(Level.WARNING,"Transaction rollback on user create: " + user);
+                getLogger().log(Level.WARNING,"Transaction rollback on user create: " + user);
                 tr.rollback();
             }
-            logger.log(Level.SEVERE, "Error on user create: " + user + " Error: " + e);
+            getLogger().log(Level.SEVERE, "Error on user create: " + user + " Error: " + e);
             throw e;
         }
     }
 
     public void update(User user){
-        logger.log(Level.INFO, "Update user");
+        getLogger().log(Level.INFO, "Update user");
         Transaction tr = null;
         try(Session session = HibernateUtils.getSessionFactory().openSession()){
             tr = session.beginTransaction();
             session.update(user);
             tr.commit();
-            logger.log(Level.INFO, "User was updated: " + user);
+            getLogger().log(Level.INFO, "User was updated: " + user);
         } catch (Exception e){
             if(tr != null) {
-                logger.log(Level.WARNING,"Transaction rollback on user update: " + user);
+                getLogger().log(Level.WARNING,"Transaction rollback on user update: " + user);
                 tr.rollback();
             }
-            logger.log(Level.SEVERE, "Error on user update: " + user + " Error: " + e);
+            getLogger().log(Level.SEVERE, "Error on user update: " + user + " Error: " + e);
             throw e;
         }
     }
 
     public void delete(User user){
-        logger.log(Level.INFO, "Delete user: " + user);
+        getLogger().log(Level.INFO, "Delete user: " + user);
         Transaction tr = null;
         try(Session session = HibernateUtils.getSessionFactory().openSession()){
             tr = session.beginTransaction();
             session.delete(user);
             tr.commit();
-            logger.log(Level.INFO, "User was deleted: " + user);
+            getLogger().log(Level.INFO, "User was deleted: " + user);
         } catch (Exception e){
             if(tr != null) {
-                logger.log(Level.WARNING,"Transaction rollback on user delete: " + user);
+                getLogger().log(Level.WARNING,"Transaction rollback on user delete: " + user);
                 tr.rollback();
             }
-            logger.log(Level.SEVERE, "Error on user delete: " + user + " Error: " + e);
+            getLogger().log(Level.SEVERE, "Error on user delete: " + user + " Error: " + e);
             throw e;
         }
     }

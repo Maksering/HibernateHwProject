@@ -87,12 +87,42 @@ class UserServiceTest {
     }
 
     @Test
+    void testUpdateUserWhenUserNotFound() {
+        when(userDAO.findById(1)).thenReturn(null);
+
+        userService.updateUser(1, "UpdateName", "UpdateName@test.com", "21");
+        verify(userDAO, never()).update(any(User.class));
+    }
+
+    @Test
+    void testUpdateUserWhenNameEmailAgeIsEmpty() {
+
+        User mockUser = mock(User.class);
+        when(userDAO.findById(1)).thenReturn(mockUser);
+
+        userService.updateUser(1, "", "", "");
+
+        verify(mockUser, never()).setName(anyString());
+        verify(mockUser, never()).setEmail(anyString());
+        verify(mockUser, never()).setAge(anyInt());
+
+        verify(userDAO).update(mockUser);
+    }
+
+    @Test
     void testDeleteUser() {
         when(userDAO.findById(1)).thenReturn(testUser);
         doNothing().when(userDAO).delete(testUser);
 
         userService.deleteUser(1);
         verify(userDAO).delete(testUser);
+    }
+    @Test
+    void testDeleteWhenUserNull(){
+        when(userDAO.findById(1)).thenReturn(null);
+
+        userService.deleteUser(1);
+        verify(userDAO, never()).delete(any(User.class));
     }
 
 

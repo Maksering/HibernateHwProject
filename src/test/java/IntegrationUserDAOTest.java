@@ -33,7 +33,6 @@ public class IntegrationUserDAOTest {
         System.setProperty("hibernate.connection.url", postgres.getJdbcUrl());
         System.setProperty("hibernate.connection.username", postgres.getUsername());
         System.setProperty("hibernate.connection.password", postgres.getPassword());
-
         HibernateUtils.buildSessionFactoryForTest();
         userDAO = new UserDAO();
     }
@@ -92,9 +91,9 @@ public class IntegrationUserDAOTest {
         userDAO.update(testUser);
 
         User findUpdatedUser = userDAO.findById(1);
-        assertEquals("UpdateName", testUser.getName());
-        assertEquals("UpdateEmail@test.com", testUser.getEmail());
-        assertEquals(22, testUser.getAge());
+        assertEquals("UpdateName", findUpdatedUser.getName());
+        assertEquals("UpdateEmail@test.com", findUpdatedUser.getEmail());
+        assertEquals(22, findUpdatedUser.getAge());
     }
 
     @Test

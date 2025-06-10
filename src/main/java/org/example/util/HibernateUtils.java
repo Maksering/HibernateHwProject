@@ -8,6 +8,13 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtils {
     private static SessionFactory sessionFactory;
 
+    public static void setSessionFactory(SessionFactory factory) {
+        sessionFactory = factory;
+    }
+    public static SessionFactory getSessionFactoryForTest(){
+        return sessionFactory;
+    }
+
     private HibernateUtils() {}
 
     public static SessionFactory getSessionFactory(){
@@ -20,15 +27,13 @@ public class HibernateUtils {
                 sessionFactory = configuration.buildSessionFactory(builder.build());
             } catch (Exception e){
                 System.err.println("Error on create SessionFactory: " + e);
+                throw new RuntimeException("Failed to create SessionFactory: " + e);
             }
         }
         return sessionFactory;
     }
 
     public static void buildSessionFactoryForTest() {
-        if (sessionFactory != null && !sessionFactory.isClosed()) {
-            sessionFactory.close();
-        }
 
         Configuration configuration = new Configuration()
                 .setProperty("hibernate.connection.driver_class", "org.postgresql.Driver")
@@ -42,8 +47,10 @@ public class HibernateUtils {
         sessionFactory = configuration.buildSessionFactory();
     }
 
-    public static void shutdown(){
-        getSessionFactory().close();
+    public static void shutdown() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            sessionFactory.close();
+        }
+        sessionFactory = null;
     }
-
 }

@@ -1,12 +1,11 @@
 package org.example;
 
-import org.example.dao.UserDAO;
 import org.example.service.UserService;
 import org.example.util.HibernateUtils;
 
 import java.util.Scanner;
-public class Main {
 
+public class Main {
     private static UserService userService = new UserService();
     private static Scanner scanner = new Scanner(System.in);
 
@@ -21,7 +20,7 @@ public class Main {
                 switch (choice){
                     case 1 -> create();
                     case 2 -> findById();
-                    case 3 -> showAll();
+                    case 3 -> userService.showAllUsers();
                     case 4 -> update();
                     case 5 -> delete();
                     case 6 -> working = false;
@@ -65,10 +64,6 @@ public class Main {
         scanner.nextLine();
 
         userService.findUserByid(id);
-    }
-
-    private static void showAll(){
-        userService.showAllUsers();
     }
 
     private static void update(){
